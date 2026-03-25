@@ -10,3 +10,6 @@ env/
 # Credentials — never commit
 credentials.json
 token.json
+
+# Runtime alert data — never commit
+logs/
