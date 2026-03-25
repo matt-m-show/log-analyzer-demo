@@ -1,0 +1,5 @@
+# All core log parsing, detection, and reporting uses Python standard library only.
+# The following packages are required solely for Google Workspace API integration:
+google-auth
+google-auth-oauthlib
+google-api-python-client

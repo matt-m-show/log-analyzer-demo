@@ -9,3 +9,4 @@ env/
 
 # Credentials — never commit
 credentials.json
+token.json
