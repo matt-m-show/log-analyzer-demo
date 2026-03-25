@@ -1,3 +1,30 @@
-Mar 24 03:12:45 webserver sshd[8821]: Failed password for invalid user admin from 192.168.1.105 port 54321 ssh2
-Mar 24 03:12:47 webserver sshd[8821]: Failed password for invalid user root from 192.168.1.105 port 54322 ssh2
-Mar 24 03:15:01 webserver sshd[8900]: Accepted password for deploy from 10.0.0.5 port 22 ssh2
+Mar 24 08:01:12 webserver sshd[3201]: Accepted password for alice from 10.0.0.21 port 51200 ssh2
+Mar 24 08:01:12 webserver sshd[3201]: pam_unix(sshd:session): session opened for user alice by (uid=0)
+Mar 24 08:15:44 webserver sudo[3340]: alice : TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/apt update
+Mar 24 09:03:57 webserver sshd[3489]: Failed password for invalid user admin from 192.168.1.105 port 54301 ssh2
+Mar 24 09:03:59 webserver sshd[3490]: Failed password for invalid user root from 192.168.1.105 port 54302 ssh2
+Mar 24 09:04:01 webserver sshd[3491]: Failed password for invalid user oracle from 192.168.1.105 port 54303 ssh2
+Mar 24 09:04:03 webserver sshd[3492]: Failed password for invalid user postgres from 192.168.1.105 port 54304 ssh2
+Mar 24 09:04:05 webserver sshd[3493]: Failed password for invalid user ubuntu from 192.168.1.105 port 54305 ssh2
+Mar 24 09:04:07 webserver sshd[3494]: Failed password for invalid user deploy from 192.168.1.105 port 54306 ssh2
+Mar 24 09:04:09 webserver sshd[3495]: Failed password for invalid user git from 192.168.1.105 port 54307 ssh2
+Mar 24 09:04:11 webserver sshd[3496]: Failed password for invalid user test from 192.168.1.105 port 54308 ssh2
+Mar 24 09:04:13 webserver sshd[3497]: Failed password for invalid user user from 192.168.1.105 port 54309 ssh2
+Mar 24 09:04:15 webserver sshd[3498]: Failed password for invalid user pi from 192.168.1.105 port 54310 ssh2
+Mar 24 09:04:17 webserver sshd[3499]: Failed password for invalid user ftpuser from 192.168.1.105 port 54311 ssh2
+Mar 24 09:04:19 webserver sshd[3500]: Failed password for invalid user www-data from 192.168.1.105 port 54312 ssh2
+Mar 24 09:30:22 webserver sshd[3601]: Accepted publickey for bob from 203.0.113.42 port 49800 ssh2
+Mar 24 09:30:22 webserver sshd[3601]: pam_unix(sshd:session): session opened for user bob by (uid=0)
+Mar 24 09:31:05 webserver sudo[3615]: bob : TTY=pts/1 ; PWD=/var/www ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx
+Mar 24 10:00:00 webserver sshd[3701]: Failed password for invalid user admin from 192.168.1.105 port 54401 ssh2
+Mar 24 10:00:02 webserver sshd[3702]: Failed password for invalid user root from 192.168.1.105 port 54402 ssh2
+Mar 24 10:00:04 webserver sshd[3703]: Failed password for invalid user nagios from 192.168.1.105 port 54403 ssh2
+Mar 24 11:45:33 webserver sshd[3811]: Accepted password for carol from 198.51.100.7 port 52100 ssh2
+Mar 24 11:45:33 webserver sshd[3811]: pam_unix(sshd:session): session opened for user carol by (uid=0)
+Mar 24 12:00:01 webserver CRON[3900]: pam_unix(cron:session): session opened for user root by (uid=0)
+Mar 24 12:00:01 webserver CRON[3900]: pam_unix(cron:session): session closed for user root
+Mar 24 14:22:18 webserver sshd[4102]: Failed password for invalid user hadoop from 192.168.1.105 port 54501 ssh2
+Mar 24 14:22:20 webserver sshd[4103]: Failed password for invalid user spark from 192.168.1.105 port 54502 ssh2
+Mar 24 14:22:22 webserver sshd[4104]: Failed password for invalid user kafka from 192.168.1.105 port 54503 ssh2
+Mar 24 16:10:55 webserver sshd[4300]: Accepted publickey for alice from 10.0.0.21 port 51888 ssh2
+Mar 24 16:10:55 webserver sshd[4300]: pam_unix(sshd:session): session opened for user alice by (uid=0)
