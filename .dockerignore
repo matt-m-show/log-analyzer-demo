@@ -1,0 +1,7 @@
+logs/
+token.json
+credentials.json
+**/__pycache__
+**/*.pyc
+.git
+log_analyzer/tests/fixtures

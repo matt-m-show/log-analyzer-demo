@@ -107,6 +107,42 @@ python dashboard/app.py
 
 Then open [http://localhost:5000](http://localhost:5000). The dashboard reads from `logs/alerts.json`, supports filtering by severity and source, and lets you update alert status (new / in progress / resolved / resolved — no action). Status is persisted to `logs/alert_status.json`.
 
+### Docker deployment
+
+> **Before starting containers**, `credentials.json` and `token.json` must both exist in the project root. Docker mounts them as read-only bind mounts — if either file is missing, `docker compose up` will error.
+
+**Step 1 — Authenticate on the host (one-time)**
+
+The OAuth flow requires a browser, so run it on the host before starting Docker:
+
+```bash
+python auth/test_auth.py
+```
+
+This generates `token.json`. Once it exists, the containers can use it non-interactively.
+
+**Step 2 — Build and start both services**
+
+```bash
+docker compose up --build
+```
+
+This starts the `scheduler` (runs every 6 hours, writes alerts) and `dashboard` (serves the UI) containers. Both share a named Docker volume at `/app/logs` so alert data is visible to both services and persists across container restarts and rebuilds.
+
+**Step 3 — Open the dashboard**
+
+[http://localhost:5000](http://localhost:5000)
+
+**Stopping**
+
+```bash
+docker compose down
+```
+
+Alert data in the `alerts` named volume is retained after `down`. To also delete the volume: `docker compose down -v`.
+
+---
+
 ### Run the test suite
 
 Run all tests from the `log_analyzer/` directory:
