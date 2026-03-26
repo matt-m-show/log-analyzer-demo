@@ -7,8 +7,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "log_analyzer"))
 
+import logging
+import re
+
 import config
 from models import Alert, LogEntry
+
+_log = logging.getLogger(__name__)
+
+# Matches client_id=<value> anywhere in raw_message
+_CLIENT_ID_RE = re.compile(r"client_id=([^\s|,]+)")
 
 
 def detect_failed_logins(entries: list[LogEntry]) -> list[Alert]:
@@ -96,13 +104,16 @@ def detect_brute_force(entries: list[LogEntry]) -> list[Alert]:
 
 
 def detect_suspicious_oauth(entries: list[LogEntry]) -> list[Alert]:
-    """Return a medium-severity Alert for each Workspace OAuth token grant event.
+    """Return a medium-severity Alert for each Workspace OAuth token grant event
+    whose client_id is not in WORKSPACE_OAUTH_WHITELIST.
 
-    Flags entries with log_type 'workspace' whose raw_message contains 'authorize',
-    which corresponds to token grant events in the Admin SDK token activity log.
-    All OAuth grants are flagged for now; a first-party app whitelist can be added
-    to config.py in a future iteration.
+    Extracts client_id from raw_message using the pattern client_id=<value>.
+    Whitelisted client IDs are silently skipped with a debug log line.
     """
+    whitelist: dict[str, str] = {
+        entry["client_id"]: entry["app_name"]
+        for entry in config.WORKSPACE_OAUTH_WHITELIST
+    }
     alerts: list[Alert] = []
 
     for entry in entries:
@@ -111,12 +122,23 @@ def detect_suspicious_oauth(entries: list[LogEntry]) -> list[Alert]:
         if "authorize" not in entry.raw_message:
             continue
 
+        # Extract client_id from raw_message; treat missing as unknown
+        match = _CLIENT_ID_RE.search(entry.raw_message)
+        client_id = match.group(1) if match else ""
+
+        if client_id and client_id in whitelist:
+            _log.debug(
+                "Skipping whitelisted OAuth client %s (%s) from %s",
+                client_id, whitelist[client_id], entry.source_ip,
+            )
+            continue
+
         alerts.append(
             Alert(
                 severity="medium",
                 description=(
                     f"Suspicious OAuth grant from {entry.source_ip}: "
-                    f"{entry.raw_message}"
+                    f"client_id={client_id or 'unknown'}"
                 ),
                 source_ip=entry.source_ip,
                 timestamp=entry.timestamp,

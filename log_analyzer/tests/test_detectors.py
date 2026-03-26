@@ -293,6 +293,19 @@ class TestWorkspaceDetectors(unittest.TestCase):
         alerts = _ws_det.detect_suspicious_oauth([entry])
         self.assertIsInstance(alerts[0], Alert)
 
+    def test_ws_oauth_whitelisted_client_id_no_alert(self):
+        # Use the first real whitelist entry from config
+        whitelisted_id = config.WORKSPACE_OAUTH_WHITELIST[0]["client_id"]
+        entry = _ws_entry(f"token | authorize | client_id={whitelisted_id}")
+        alerts = _ws_det.detect_suspicious_oauth([entry])
+        self.assertEqual(alerts, [])
+
+    def test_ws_oauth_unknown_client_id_produces_alert(self):
+        entry = _ws_entry("token | authorize | client_id=unknown-suspicious-app")
+        alerts = _ws_det.detect_suspicious_oauth([entry])
+        self.assertEqual(len(alerts), 1)
+        self.assertEqual(alerts[0].severity, "medium")
+
 
 if __name__ == "__main__":
     unittest.main()
