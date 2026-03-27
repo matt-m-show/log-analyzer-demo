@@ -1,4 +1,5 @@
-# credentials.json and token.json are mounted as read-only bind mounts from the project root.
+# credentials.json is mounted read-only; token.json is mounted read-write for the scheduler
+# so it can refresh and persist OAuth tokens without host-side intervention.
 # Before running `docker compose up`, ensure both files exist:
 #   credentials.json — OAuth client secrets downloaded from Google Cloud Console
 #   token.json       — generated on first run via `python auth/test_auth.py` on the host
@@ -10,7 +11,7 @@ services:
       dockerfile: Dockerfile.scheduler
     volumes:
       - ./credentials.json:/app/credentials.json:ro
-      - ./token.json:/app/token.json:ro
+      - ./token.json:/app/token.json:rw
       - alerts:/app/logs
     restart: unless-stopped
 
@@ -20,7 +21,6 @@ services:
       dockerfile: Dockerfile.dashboard
     volumes:
       - ./credentials.json:/app/credentials.json:ro
-      - ./token.json:/app/token.json:ro
       - alerts:/app/logs
     ports:
       - "5000:5000"
