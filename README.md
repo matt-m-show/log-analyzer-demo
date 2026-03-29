@@ -2,6 +2,9 @@
 
 A Python tool that parses authentication logs, web server logs, and Google Workspace audit logs to detect suspicious activity — failed SSH logins, brute force attempts, anomalous OAuth grants, and admin changes. Includes a Flask dashboard for reviewing and triaging alerts.
 
+<img width="1879" height="829" alt="image" src="https://github.com/user-attachments/assets/9a1b150f-b4dd-4f03-9499-ec2de41a79e4" />
+
+
 ## Architecture
 
 ```
